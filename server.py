@@ -1,5 +1,5 @@
-import websockets
 import asyncio
+import websockets
 
 async def handler(ws):
     async for code in ws:
@@ -10,4 +10,9 @@ async def handler(ws):
         except Exception as e:
             await ws.send("Erreur: " + str(e))
 
-asyncio.run(websockets.serve(handler, "0.0.0.0", 8765))
+async def main():
+    async with websockets.serve(handler, "0.0.0.0", 8765):
+        print("Serveur Python prêt sur le port 8765")
+        await asyncio.Future()  # boucle infinie propre
+
+asyncio.run(main())
